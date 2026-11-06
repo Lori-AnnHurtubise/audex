@@ -160,5 +160,6 @@ Généré automatiquement par `@astrojs/sitemap` à chaque build.
 | `audrey-auclair.json` | Familial |
 | `audrey-michaud-roy.json` | Familial |
 | `frederique-drolet.json` | Criminel |
+| `jacob-lachance.json` | Criminel (stagiaire en droit) |
 
 Les autres membres (dont Véronik Levesque, étudiants, personnel admin) ont `practiceAreas: []`.

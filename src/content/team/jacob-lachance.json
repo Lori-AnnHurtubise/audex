@@ -1,7 +1,9 @@
 {
   "bio": "Jacob a pris la direction du baccalauréat en droit afin d’avoir un impact concret sur l’accès à la justice auprès de ceux en ayant besoin, l’équité et de l’inclusion étant des valeurs capitales pour lui. Pendant son parcours universitaire, Jacob a eu l’occasion de participer à des événements le familiarisant avec le monde juridique. \n\nDans ses temps libres, Jacob est un passionné des sports, de culture générale et d’actualités.",
   "mascot": false,
-  "practiceAreas": [],
+  "practiceAreas": [
+    "droit-criminel-penal"
+  ],
   "name": "Jacob Lachance",
   "order": 8,
   "photo": "/images/equipe/jacob-lachance.webp",
