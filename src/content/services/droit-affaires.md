@@ -225,10 +225,10 @@ packageGroups:
 packagesTerms: "Prix en dollars canadiens, taxes en sus. Les déboursés sont exclus : frais gouvernementaux, frais de publication et recherches de dénomination. Le montant du forfait est déposé en fidéicommis avant le début des travaux. Le crédit de la consultation (200 $) s'applique une seule fois, aux honoraires seulement (pas aux déboursés), si le forfait est confié dans les 60 jours suivant la consultation. Toute demande hors du cadre d'un forfait fait l'objet d'une soumission avant d'être réalisée. Tarifs en vigueur en novembre 2026."
 stepsTitle: "Comment fonctionne un forfait chez AUDEX?"
 steps:
-  - title: "Décrivez votre besoin."
-    text: "Remplissez notre formulaire en 2 minutes. Nous vous recommandons le bon forfait."
+  - title: "Repérez un forfait."
+    text: "Indiquez votre besoin ci-dessous pour voir un forfait suggéré et son prix. C'est un point de départ : le bon forfait est confirmé avec l'avocat."
   - title: "Rencontrez un avocat."
-    text: "La consultation initiale se fait en personne ou en visioconférence, peu importe votre région."
+    text: "La consultation initiale se fait en personne ou en visioconférence, peu importe votre région. L'avocat analyse votre situation et détermine avec vous le forfait adapté."
   - title: "Confirmez le forfait."
     text: "Le prix est fixé d'avance et déposé en fidéicommis. Le travail commence ensuite."
   - title: "Recevez vos documents."
@@ -238,7 +238,7 @@ areaText: "Que votre entreprise soit à Québec, Lévis, Montréal, Gatineau, Sh
 areaCities: ["Québec", "Lévis", "Montréal", "Gatineau", "Sherbrooke", "Trois-Rivières", "Saguenay", "Rimouski"]
 areaOffices: "Bureaux : Québec et Donnacona"
 prequalTitle: "Trouvez le bon forfait pour votre entreprise"
-prequalIntro: "Répondez à quelques questions. Un membre de notre équipe vous recommande le forfait adapté et vous propose un moment pour la consultation."
+prequalIntro: "Répondez à quelques questions pour voir un forfait suggéré et son prix. Ce n'est qu'une indication : le forfait qui vous convient est déterminé avec l'avocat, lors de la consultation."
 schemaName: "AUDEX Avocats – Droit des affaires"
 ctaText: Discutez de la situation de votre entreprise avec un avocat
 relatedServices:

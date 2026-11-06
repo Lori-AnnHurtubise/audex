@@ -72,6 +72,7 @@ const needToPkg = Object.fromEntries(needs.map((n) => [n.value, n.pkg]));
           <p class="prequal-suggest-name" id="prequal-suggest-name"></p>
           <p class="prequal-suggest-price" id="prequal-suggest-price"></p>
           <p class="prequal-suggest-summary" id="prequal-suggest-summary"></p>
+          <p class="prequal-suggest-disclaimer">Forfait à confirmer avec l'avocat lors de la consultation.</p>
         </div>
       </div>
 
@@ -193,6 +194,7 @@ const needToPkg = Object.fromEntries(needs.map((n) => [n.value, n.pkg]));
   .prequal-suggest-price { color: #666; font-size: 0.85rem; margin-bottom: 0.5rem !important; }
   .prequal-suggest-price :global(strong) { font-size: 1.6rem; color: var(--color-navy); margin-right: 0.25rem; }
   .prequal-suggest-summary { font-size: 0.85rem; color: #666; line-height: 1.5; }
+  .prequal-suggest-disclaimer { font-size: 0.8rem; font-style: italic; color: #777; margin-top: 0.75rem !important; padding-top: 0.75rem; border-top: 1px solid var(--color-border); }
 
   .prequal-form {
     position: relative;
