@@ -1,7 +1,8 @@
 ---
-// Formulaire de préqualification des forfaits (Netlify Forms : « prequalification-affaires »)
-// Le formulaire est aussi déclaré dans src/pages/__forms.html.
+// Outil « Trouvez le bon forfait » : le visiteur choisit ses paramètres et voit un forfait suggéré.
+// Aucun renseignement personnel n'est recueilli ni envoyé (pas de formulaire Netlify).
 import type { PackageItem } from '../sections/PricingPackages.astro';
+import { company } from '../../data/company';
 
 export interface Props {
   title: string;
@@ -74,26 +75,12 @@ const needToPkg = Object.fromEntries(needs.map((n) => [n.value, n.pkg]));
         </div>
       </div>
 
-      <form
-        name="prequalification-affaires"
-        method="POST"
-        action="/merci"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        class="prequal-form"
-        id="prequal-form"
-      >
-        <input type="hidden" name="form-name" value="prequalification-affaires" />
-        <input type="hidden" name="forfait-suggere" id="prequal-suggested" value="" />
-        <p style="position:absolute;left:-9999px;" aria-hidden="true">
-          <label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
-        </p>
-
+      <div class="prequal-form" id="prequal-form" role="group" aria-label="Trouvez le bon forfait">
         <fieldset class="prequal-chips">
-          <legend>De quoi avez-vous besoin? <span class="required">*</span></legend>
+          <legend>De quoi avez-vous besoin?</legend>
           {needs.map((n, i) => (
             <label class="chip">
-              <input type="radio" name="besoin" value={n.value} required={i === 0} />
+              <input type="radio" name="besoin" value={n.value} />
               <span>{n.value}</span>
             </label>
           ))}
@@ -131,36 +118,11 @@ const needToPkg = Object.fromEntries(needs.map((n) => [n.value, n.pkg]));
           </div>
         </div>
 
-        <div class="prequal-row">
-          <div class="form-group">
-            <label for="pq-nom">Nom complet <span class="required">*</span></label>
-            <input type="text" id="pq-nom" name="nom" required autocomplete="name" />
-          </div>
-          <div class="form-group">
-            <label for="pq-courriel">Courriel <span class="required">*</span></label>
-            <input type="email" id="pq-courriel" name="courriel" required autocomplete="email" />
-          </div>
-          <div class="form-group">
-            <label for="pq-telephone">Téléphone <span class="required">*</span></label>
-            <input type="tel" id="pq-telephone" name="telephone" required autocomplete="tel" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="pq-message">Décrivez brièvement votre situation <span class="optional">(facultatif)</span></label>
-          <textarea id="pq-message" name="message" rows="4"></textarea>
-        </div>
-
-        <label class="prequal-consent">
-          <input type="checkbox" name="consentement" value="Oui" required />
-          <span>J'accepte qu'AUDEX Avocats utilise ces renseignements pour répondre à ma demande, conformément à sa <a href="/politique-confidentialite">politique de confidentialité</a>.</span>
-        </label>
-
         <div class="prequal-submit">
-          <button type="submit" class="btn btn-gold">Recevoir ma recommandation</button>
-          <p>L'envoi du formulaire ne crée pas de relation avocat-client. N'y inscrivez pas d'information confidentielle.</p>
+          <a href="/nous-joindre" class="btn btn-gold">Planifier une consultation</a>
+          <p>ou appelez le <a href={company.phoneHref}>{company.phone}</a></p>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </section>
@@ -173,14 +135,13 @@ const needToPkg = Object.fromEntries(needs.map((n) => [n.value, n.pkg]));
     const nameEl = document.getElementById('prequal-suggest-name');
     const priceEl = document.getElementById('prequal-suggest-price');
     const sumEl = document.getElementById('prequal-suggest-summary');
-    const hidden = document.getElementById('prequal-suggested');
 
     const update = () => {
       const need = form.querySelector('input[name="besoin"]:checked')?.value;
       const sh = form.querySelector('input[name="actionnaires"]:checked')?.value;
       const id = need && needToPkg[need];
       const p = id && pkgData[id];
-      if (!p) { box.hidden = true; hidden.value = ''; return; }
+      if (!p) { box.hidden = true; return; }
       let price = p.prices[0];
       let name = p.name;
       let note = p.note;
@@ -201,7 +162,6 @@ const needToPkg = Object.fromEntries(needs.map((n) => [n.value, n.pkg]));
       priceEl.append(strong, document.createTextNode(note ? ` ${note}` : ''));
       sumEl.textContent = p.summary;
       box.hidden = false;
-      hidden.value = `${name} – ${price.amount}`;
     };
     form.addEventListener('change', update);
 
@@ -261,10 +221,8 @@ const needToPkg = Object.fromEntries(needs.map((n) => [n.value, n.pkg]));
   .chip input:focus-visible + span { box-shadow: 0 0 0 3px rgba(230, 165, 16, 0.4); }
   .prequal-row { display: grid; grid-template-columns: 1fr; gap: 0 1rem; }
   @media (min-width: 768px) { .prequal-row { grid-template-columns: repeat(3, 1fr); } }
-  .prequal-consent { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.5; margin: 0.5rem 0 1.5rem; cursor: pointer; }
-  .prequal-consent input { margin-top: 0.2rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; accent-color: var(--color-navy); }
-  .prequal-consent a { color: var(--color-navy); text-decoration: underline; }
   .prequal-submit { display: flex; flex-direction: column; gap: 0.75rem; }
   @media (min-width: 768px) { .prequal-submit { flex-direction: row; align-items: center; gap: 1.5rem; } }
-  .prequal-submit p { font-size: 0.8rem; color: #777; line-height: 1.5; margin: 0; }
+  .prequal-submit p { font-size: 0.95rem; color: #555; margin: 0; }
+  .prequal-submit p a { color: var(--color-navy); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 </style>
