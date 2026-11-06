@@ -1,0 +1,50 @@
+---
+export interface Props {
+  title: string;
+  items: { title: string; description: string }[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section class="section section-light">
+  <div class="container-audex">
+    <div class="section-header">
+      <h2>{title}</h2>
+    </div>
+    <div class="why-grid">
+      {items.map((item) => (
+        <div class="why-card">
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .why-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  }
+  .why-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+  }
+  .why-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+  }
+  .why-card p {
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>

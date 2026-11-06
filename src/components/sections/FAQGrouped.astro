@@ -1,0 +1,61 @@
+---
+// FAQ en colonnes, une par public. Réutilise l'accordéon de FAQItem / FAQ.astro.
+import FAQItem from '../cards/FAQItem.astro';
+
+export interface Props {
+  title?: string;
+  groups: { id: string; title: string; items: { question: string; answer: string }[] }[];
+}
+
+const { title = 'Questions fréquentes', groups } = Astro.props;
+---
+
+<section class="section section-light">
+  <div class="container-audex">
+    <div class="section-header">
+      <h2>{title}</h2>
+    </div>
+    <div class="faq-groups">
+      {groups.map((g) => (
+        <div class="faq-group">
+          <h3 class="faq-group-title">{g.title}</h3>
+          <div class="faq-list">
+            {g.items.map((item) => <FAQItem question={item.question} answer={item.answer} />)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-question');
+    if (!btn) return;
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const isActive = item.classList.toggle('active');
+    btn.setAttribute('aria-expanded', String(isActive));
+    answer.style.maxHeight = isActive ? answer.scrollHeight + 'px' : '0px';
+  });
+</script>
+
+<style>
+  .faq-groups {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  @media (min-width: 900px) {
+    .faq-groups { grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  }
+  .faq-group-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold-hover);
+    margin-bottom: 0.5rem;
+  }
+  .faq-groups .faq-list { max-width: none; }
+</style>

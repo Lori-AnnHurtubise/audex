@@ -8,7 +8,7 @@ Cabinet juridique à Québec et Portneuf. Site statique Astro 5 déployé sur Ne
 - **CSS** : Tailwind CSS + styles globaux dans `src/styles/global.css`
 - **CMS** : Decap CMS (interface : avoc.ca/admin, auth via DecapBridge)
 - **Déploiement** : Netlify — auto-deploy à chaque `git push` sur `main`
-- **Dépôt** : GitHub → `francis-adux/audex` (branche principale : `main`)
+- **Dépôt** : GitHub → `Lori-AnnHurtubise/audex` (branche principale : `main`)
 - **Langue** : Français québécois partout
 
 ## Commandes utiles
@@ -56,6 +56,9 @@ src/
   layouts/
     BaseLayout.astro      # Layout principal — canonical, GTM, header, footer
     ServiceLayout.astro   # Layout pages de services — inclut ServiceTeam
+                          # Gabarit « deux publics » (employeurs/employés) activé si le .md
+                          # définit `audiences` (ex. droit-emploi-travail) : cartes d'ancre,
+                          # FAQ en 2 colonnes (faq[].group) et JSON-LD généré (page, service, FAQ)
   components/
     cards/TeamCard.astro           # Carte membre (grille /notre-equipe/)
     sections/ServiceTeam.astro     # Avocats liés à un domaine (services + blog)

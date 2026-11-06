@@ -127,6 +127,9 @@
 .hero-internal .hero-content { position: relative; z-index: 2; }
 .hero-internal h1 { color: var(--color-white); margin-bottom: 1rem; }
 .hero-internal .hero-subtitle { color: rgba(255,255,255,0.85); max-width: 650px; margin: 0 auto; }
+.hero-eyebrow { color: var(--color-gold); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.hero-internal .hero-eyebrow + h1 { font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.2; }
+.hero-internal .hero-eyebrow ~ .hero-subtitle { font-size: clamp(1rem, 2vw, 1.15rem); max-width: 720px; }
 
 .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.9rem; flex-wrap: wrap; }
 .breadcrumb a { color: rgba(255,255,255,0.7); }

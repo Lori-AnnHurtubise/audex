@@ -76,12 +76,39 @@ collections:
       - { label: 'Image hero (PNG)', name: 'heroImage', widget: 'image', required: false }
       - { label: 'Image hero (WebP)', name: 'heroImageWebp', widget: 'image', required: false }
       - { label: 'Alt image hero', name: 'heroImageAlt', widget: 'string', required: false }
-      - { label: 'Titre de l’intro', name: 'introTitle', widget: 'string' }
+      - { label: 'Surtitre du hero (optionnel)', name: 'heroEyebrow', widget: 'string', required: false }
+      - { label: 'Mis à jour le (optionnel)', name: 'updatedDate', widget: 'datetime', required: false, time_format: false, date_format: 'YYYY-MM-DD', format: 'YYYY-MM-DD' }
+      - label: 'Publics (gabarit employeurs / employés, optionnel)'
+        name: 'audiences'
+        widget: 'list'
+        required: false
+        fields:
+          - { label: 'Identifiant (ancre, ex. employeurs)', name: 'id', widget: 'string' }
+          - { label: 'Étiquette du bouton (ex. Vous êtes employeur)', name: 'label', widget: 'string' }
+          - { label: 'Surtitre de la section', name: 'sectionLabel', widget: 'string', required: false }
+          - { label: 'Titre du bouton', name: 'cardTitle', widget: 'string' }
+          - { label: 'Texte du bouton', name: 'cardText', widget: 'string', required: false }
+          - { label: 'Titre de la section (H2)', name: 'title', widget: 'string' }
+          - { label: 'Introduction de la section', name: 'intro', widget: 'text', required: false }
+          - { label: 'Services offerts', name: 'items', widget: 'list', field: { label: 'Service', name: 'item', widget: 'string' } }
+          - { label: 'Titre de la colonne FAQ', name: 'faqTitle', widget: 'string', required: false }
+          - { label: 'Type schema.org (BusinessAudience / PeopleAudience)', name: 'schemaType', widget: 'string', required: false }
+          - { label: 'Nom schema.org du public', name: 'schemaName', widget: 'string', required: false }
+      - { label: 'Titre « Pourquoi choisir Audex »', name: 'whyTitle', widget: 'string', required: false }
+      - label: 'Pourquoi choisir Audex (optionnel)'
+        name: 'whyItems'
+        widget: 'list'
+        required: false
+        fields:
+          - { label: 'Titre', name: 'title', widget: 'string' }
+          - { label: 'Description', name: 'description', widget: 'text' }
+      - { label: 'Titre de l’intro', name: 'introTitle', widget: 'string', required: false }
       - { label: 'Titre "Ce qu’Audex peut faire"', name: 'offeringsTitle', widget: 'string', default: "Ce qu'Audex peut faire pour vous" }
       - { label: 'Sous-titre "Ce qu’Audex peut faire"', name: 'offeringsSubtitle', widget: 'text', required: false }
       - label: "Ce qu'Audex peut faire"
         name: 'offerings'
         widget: 'list'
+        required: false
         fields:
           - { label: 'Titre', name: 'title', widget: 'string' }
           - { label: 'Description', name: 'description', widget: 'text' }
@@ -103,9 +130,13 @@ collections:
         name: 'faq'
         widget: 'list'
         fields:
+          - { label: 'Public (identifiant, optionnel)', name: 'group', widget: 'string', required: false }
           - { label: 'Question', name: 'question', widget: 'string' }
           - { label: 'Réponse (HTML permis)', name: 'answer', widget: 'text' }
       - { label: 'Texte du CTA final', name: 'ctaText', widget: 'string', default: 'Discutez de votre situation avec un avocat' }
+      - { label: 'Sous-titre du CTA final (optionnel)', name: 'ctaSubtitle', widget: 'text', required: false }
+      - { label: 'Nom schema.org du service (optionnel)', name: 'schemaName', widget: 'string', required: false }
+      - { label: 'Sujets schema.org (knowsAbout, optionnel)', name: 'knowsAbout', widget: 'list', required: false }
       - { label: 'Services connexes (slugs)', name: 'relatedServices', widget: 'list', required: false }
       - { label: 'Intro de la page (markdown)', name: 'body', widget: 'markdown' }
 

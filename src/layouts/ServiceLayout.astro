@@ -5,9 +5,29 @@ import HeroInternal from '../components/sections/HeroInternal.astro';
 import ServiceOfferings from '../components/sections/ServiceOfferings.astro';
 import TestimonialSingle from '../components/sections/TestimonialSingle.astro';
 import FAQ from '../components/sections/FAQ.astro';
+import FAQGrouped from '../components/sections/FAQGrouped.astro';
 import CtaBlock from '../components/sections/CtaBlock.astro';
 import ServicesConnexes from '../components/sections/ServicesConnexes.astro';
 import ServiceTeam from '../components/sections/ServiceTeam.astro';
+import AudienceCards from '../components/sections/AudienceCards.astro';
+import AudienceServices from '../components/sections/AudienceServices.astro';
+import WhyChoose from '../components/sections/WhyChoose.astro';
+import { company } from '../data/company';
+import { offices } from '../data/offices';
+
+type Audience = {
+  id: string;
+  label: string;
+  sectionLabel?: string;
+  cardTitle: string;
+  cardText?: string;
+  title: string;
+  intro?: string;
+  items: string[];
+  faqTitle?: string;
+  schemaType?: string;
+  schemaName?: string;
+};
 
 export interface Props {
   title: string;
@@ -19,14 +39,22 @@ export interface Props {
   heroImage?: string;
   heroImageWebp?: string;
   heroImageAlt?: string;
-  introTitle: string;
+  heroEyebrow?: string;
+  updatedDate?: Date;
+  introTitle?: string;
   offeringsTitle?: string;
   offeringsSubtitle?: string;
   offerings: { title: string; description: string }[];
   highlight?: { title: string; description: string };
   testimonial?: { quote: string; author?: string };
-  faq: { question: string; answer: string }[];
+  audiences?: Audience[];
+  whyTitle?: string;
+  whyItems?: { title: string; description: string }[];
+  faq: { question: string; answer: string; group?: string }[];
   ctaText?: string;
+  ctaSubtitle?: string;
+  schemaName?: string;
+  knowsAbout?: string[];
   relatedServices?: string[];
   serviceSlug?: string;
 }
@@ -38,46 +66,149 @@ const teamMembers = props.serviceSlug
       .filter(m => !m.data.mascot && m.data.practiceAreas.includes(props.serviceSlug!))
       .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
   : [];
+
+// Gabarit « deux publics » : activé quand la page définit des publics (audiences)
+const audiences = props.audiences ?? [];
+const isAudienceLayout = audiences.length > 0;
+
+const faqGroups = audiences
+  .map((a) => ({
+    id: a.id,
+    title: a.faqTitle ?? a.label,
+    items: props.faq.filter((q) => q.group === a.id),
+  }))
+  .filter((g) => g.items.length > 0);
+
+// Données structurées JSON-LD (page, service, FAQ) — générées à partir du contenu visible
+const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+const pageUrl = props.serviceSlug ? new URL(`/services/${props.serviceSlug}/`, Astro.site).toString() : undefined;
+
+const jsonLd = isAudienceLayout && pageUrl
+  ? {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': pageUrl,
+          url: pageUrl,
+          name: props.seoTitle,
+          inLanguage: 'fr-CA',
+          ...(props.updatedDate ? { dateModified: props.updatedDate.toISOString().slice(0, 10) } : {}),
+          about: { '@id': `${pageUrl}#service` },
+        },
+        {
+          '@type': 'LegalService',
+          '@id': `${pageUrl}#service`,
+          name: props.schemaName ?? `${company.name} – ${props.title}`,
+          url: pageUrl,
+          telephone: `+1-${company.phone}`,
+          address: offices.map((o) => ({
+            '@type': 'PostalAddress',
+            streetAddress: o.address,
+            addressLocality: o.name,
+            addressRegion: 'QC',
+            postalCode: o.postalCode,
+            addressCountry: 'CA',
+          })),
+          areaServed: {
+            '@type': 'AdministrativeArea',
+            name: 'Québec',
+            containedInPlace: { '@type': 'Country', name: 'Canada' },
+          },
+          availableChannel: {
+            '@type': 'ServiceChannel',
+            name: 'Consultation en personne ou à distance',
+          },
+          ...(props.knowsAbout?.length ? { knowsAbout: props.knowsAbout } : {}),
+          audience: audiences
+            .filter((a) => a.schemaType && a.schemaName)
+            .map((a) => ({ '@type': a.schemaType, name: a.schemaName })),
+        },
+        ...(props.faq.length
+          ? [
+              {
+                '@type': 'FAQPage',
+                '@id': `${pageUrl}#faq`,
+                mainEntity: faqGroups.flatMap((g) => g.items).map((q) => ({
+                  '@type': 'Question',
+                  name: q.question,
+                  acceptedAnswer: { '@type': 'Answer', text: stripHtml(q.answer) },
+                })),
+              },
+            ]
+          : []),
+      ],
+    }
+  : undefined;
+
+const teamTitle = props.shortTitle.charAt(0).toLowerCase() + props.shortTitle.slice(1);
 ---
 
 <BaseLayout title={props.seoTitle} description={props.seoDescription} headerSolid>
+  {jsonLd && (
+    <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  )}
+
   <HeroInternal
     title={props.heroTitle}
     subtitle={props.heroSubtitle}
     image={props.heroImage}
     imageWebp={props.heroImageWebp}
     imageAlt={props.heroImageAlt}
+    eyebrow={props.heroEyebrow}
     breadcrumb={[
       { label: 'Nos services', href: '/#services' },
       { label: props.shortTitle },
     ]}
-  />
+  >
+    {isAudienceLayout && <AudienceCards audiences={audiences} updatedDate={props.updatedDate} />}
+  </HeroInternal>
 
-  <section class="section">
-    <div class="container-audex">
-      <div class="about-content">
-        <h2>{props.introTitle}</h2>
-        <slot name="intro" />
-      </div>
-    </div>
-  </section>
+  {isAudienceLayout ? (
+    <>
+      <AudienceServices audiences={audiences} />
 
-  <ServiceOfferings
-    title={props.offeringsTitle}
-    subtitle={props.offeringsSubtitle}
-    offerings={props.offerings}
-    highlight={props.highlight}
-  />
+      {props.whyItems && props.whyItems.length > 0 && (
+        <WhyChoose title={props.whyTitle ?? 'Pourquoi choisir Audex'} items={props.whyItems} />
+      )}
 
-  {props.testimonial && (
-    <TestimonialSingle quote={props.testimonial.quote} author={props.testimonial.author} />
+      <ServiceTeam members={teamMembers} serviceTitle={teamTitle} />
+
+      {faqGroups.length > 0 && <FAQGrouped groups={faqGroups} />}
+
+      <CtaBlock title={props.ctaText} subtitle={props.ctaSubtitle} />
+    </>
+  ) : (
+    <>
+      {props.introTitle && (
+        <section class="section">
+          <div class="container-audex">
+            <div class="about-content">
+              <h2>{props.introTitle}</h2>
+              <slot name="intro" />
+            </div>
+          </div>
+        </section>
+      )}
+
+      <ServiceOfferings
+        title={props.offeringsTitle}
+        subtitle={props.offeringsSubtitle}
+        offerings={props.offerings}
+        highlight={props.highlight}
+      />
+
+      {props.testimonial && (
+        <TestimonialSingle quote={props.testimonial.quote} author={props.testimonial.author} />
+      )}
+
+      <FAQ items={props.faq} />
+
+      <ServiceTeam members={teamMembers} serviceTitle={props.shortTitle} />
+
+      <CtaBlock title={props.ctaText} />
+    </>
   )}
-
-  <FAQ items={props.faq} />
-
-  <ServiceTeam members={teamMembers} serviceTitle={props.shortTitle} />
-
-  <CtaBlock title={props.ctaText} />
 
   {props.relatedServices && props.relatedServices.length > 0 && (
     <ServicesConnexes slugs={props.relatedServices} />

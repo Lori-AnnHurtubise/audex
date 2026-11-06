@@ -7,10 +7,11 @@ export interface Props {
   image?: string;
   imageWebp?: string;
   imageAlt?: string;
+  eyebrow?: string;
   breadcrumb: BreadcrumbItem[];
 }
 
-const { title, subtitle, image, imageWebp, imageAlt = '', breadcrumb } = Astro.props;
+const { title, subtitle, image, imageWebp, imageAlt = '', eyebrow, breadcrumb } = Astro.props;
 ---
 
 <section class="hero-internal">
@@ -24,7 +25,9 @@ const { title, subtitle, image, imageWebp, imageAlt = '', breadcrumb } = Astro.p
   )}
   <div class="hero-content">
     <Breadcrumb items={breadcrumb} />
+    {eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
     <h1>{title}</h1>
     {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+    <slot />
   </div>
 </section>

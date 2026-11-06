@@ -1,0 +1,80 @@
+---
+// Boutons d'ancre du hero vers les sections par public (employeurs / employés)
+export interface Props {
+  audiences: { id: string; label: string; cardTitle: string; cardText?: string }[];
+  updatedDate?: Date;
+}
+
+const { audiences, updatedDate } = Astro.props;
+
+const updatedLabel = updatedDate
+  ? new Intl.DateTimeFormat('fr-CA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(updatedDate)
+  : undefined;
+const updatedIso = updatedDate ? updatedDate.toISOString().slice(0, 10) : undefined;
+---
+
+{updatedLabel && (
+  <p class="hero-updated">Mis à jour le <time datetime={updatedIso}>{updatedLabel}</time></p>
+)}
+
+<div class="audience-cards">
+  {audiences.map((a, i) => (
+    <a href={`#${a.id}`} class={`audience-card audience-card-${i}`}>
+      <span class="audience-card-label">{a.label}</span>
+      <span class="audience-card-title">{a.cardTitle} <span aria-hidden="true">→</span></span>
+      {a.cardText && <span class="audience-card-text">{a.cardText}</span>}
+    </a>
+  ))}
+</div>
+
+<style>
+  .hero-updated {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.85rem;
+    margin: 1.25rem 0 0;
+  }
+  .audience-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 720px;
+    margin: 2rem auto 0;
+    text-align: left;
+  }
+  @media (min-width: 640px) {
+    .audience-cards { grid-template-columns: 1fr 1fr; }
+  }
+  .audience-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1.1rem 1.35rem;
+    background: var(--color-white);
+    border-radius: var(--radius);
+    border-top: 4px solid var(--color-gold);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow var(--transition);
+  }
+  .audience-card-1 { border-top-color: var(--color-navy-light); }
+  .audience-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  }
+  .audience-card-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold-hover);
+  }
+  .audience-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+  .audience-card-text {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.45;
+  }
+</style>

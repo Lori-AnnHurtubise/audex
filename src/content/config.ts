@@ -39,15 +39,44 @@ const services = defineCollection({
     heroImage: z.string().optional(),
     heroImageWebp: z.string().optional(),
     heroImageAlt: z.string().optional(),
-    introTitle: z.string(),
+    introTitle: z.string().optional(),
+    // Gabarit « deux publics » (employeurs / employés) — optionnel
+    heroEyebrow: z.string().optional(),
+    updatedDate: z.coerce.date().optional(),
+    audiences: z
+      .array(
+        z.object({
+          id: z.string(),
+          label: z.string(),
+          sectionLabel: z.string().optional(),
+          cardTitle: z.string(),
+          cardText: z.string().optional(),
+          title: z.string(),
+          intro: z.string().optional(),
+          items: z.array(z.string()),
+          faqTitle: z.string().optional(),
+          schemaType: z.string().optional(),
+          schemaName: z.string().optional(),
+        })
+      )
+      .optional(),
+    whyTitle: z.string().optional(),
+    whyItems: z
+      .array(z.object({ title: z.string(), description: z.string() }))
+      .optional(),
+    ctaSubtitle: z.string().optional(),
+    schemaName: z.string().optional(),
+    knowsAbout: z.array(z.string()).optional(),
     offeringsTitle: z.string().default("Ce qu'Audex peut faire pour vous"),
     offeringsSubtitle: z.string().optional(),
-    offerings: z.array(
-      z.object({
-        title: z.string(),
-        description: z.string(),
-      })
-    ),
+    offerings: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+        })
+      )
+      .default([]),
     highlight: z
       .object({
         title: z.string(),
@@ -64,6 +93,8 @@ const services = defineCollection({
       z.object({
         question: z.string(),
         answer: z.string(),
+        // id d'un public (audiences[].id) pour la FAQ en deux colonnes
+        group: z.string().optional(),
       })
     ),
     ctaText: z.string().default('Discutez de votre situation avec un avocat'),
