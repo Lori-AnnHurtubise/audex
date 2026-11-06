@@ -12,6 +12,9 @@ import ServiceTeam from '../components/sections/ServiceTeam.astro';
 import AudienceCards from '../components/sections/AudienceCards.astro';
 import AudienceServices from '../components/sections/AudienceServices.astro';
 import WhyChoose from '../components/sections/WhyChoose.astro';
+import PricingPackages, { type PackageItem } from '../components/sections/PricingPackages.astro';
+import PackageSteps from '../components/sections/PackageSteps.astro';
+import PrequalForm from '../components/forms/PrequalForm.astro';
 import { company } from '../data/company';
 import { offices } from '../data/offices';
 
@@ -53,6 +56,19 @@ export interface Props {
   faq: { question: string; answer: string; group?: string }[];
   ctaText?: string;
   ctaSubtitle?: string;
+  packagesTitle?: string;
+  packagesIntro?: string;
+  packagesStartOptions?: { title: string; text: string }[];
+  packageGroups?: { label: string; items: (PackageItem & { prices: { amount: number; label?: string; schemaName?: string }[] })[] }[];
+  packagesTerms?: string;
+  stepsTitle?: string;
+  steps?: { title: string; text: string }[];
+  areaTitle?: string;
+  areaText?: string;
+  areaCities?: string[];
+  areaOffices?: string;
+  prequalTitle?: string;
+  prequalIntro?: string;
   schemaName?: string;
   knowsAbout?: string[];
   relatedServices?: string[];
@@ -83,7 +99,13 @@ const faqGroups = audiences
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 const pageUrl = props.serviceSlug ? new URL(`/services/${props.serviceSlug}/`, Astro.site).toString() : undefined;
 
-const jsonLd = isAudienceLayout && pageUrl
+// Forfaits à prix fixe : activés quand la page définit des groupes de forfaits
+const packageGroups = props.packageGroups ?? [];
+const allPackages = packageGroups.flatMap((g) => g.items);
+const hasPackages = allPackages.length > 0;
+const faqForSchema = isAudienceLayout ? faqGroups.flatMap((g) => g.items) : props.faq;
+
+const jsonLd = (isAudienceLayout || hasPackages) && pageUrl
   ? {
       '@context': 'https://schema.org',
       '@graph': [
@@ -102,6 +124,7 @@ const jsonLd = isAudienceLayout && pageUrl
           name: props.schemaName ?? `${company.name} – ${props.title}`,
           url: pageUrl,
           telephone: `+1-${company.phone}`,
+          ...(hasPackages ? { email: company.email } : {}),
           address: offices.map((o) => ({
             '@type': 'PostalAddress',
             streetAddress: o.address,
@@ -120,16 +143,36 @@ const jsonLd = isAudienceLayout && pageUrl
             name: 'Consultation en personne ou à distance',
           },
           ...(props.knowsAbout?.length ? { knowsAbout: props.knowsAbout } : {}),
-          audience: audiences
-            .filter((a) => a.schemaType && a.schemaName)
-            .map((a) => ({ '@type': a.schemaType, name: a.schemaName })),
+          ...(isAudienceLayout
+            ? {
+                audience: audiences
+                  .filter((a) => a.schemaType && a.schemaName)
+                  .map((a) => ({ '@type': a.schemaType, name: a.schemaName })),
+              }
+            : {}),
+          ...(hasPackages
+            ? {
+                hasOfferCatalog: {
+                  '@type': 'OfferCatalog',
+                  name: `Forfaits en ${props.shortTitle.charAt(0).toLowerCase()}${props.shortTitle.slice(1)}`,
+                  itemListElement: allPackages.flatMap((p) =>
+                    p.prices.map((pr) => ({
+                      '@type': 'Offer',
+                      name: pr.schemaName ?? p.name,
+                      price: String(pr.amount),
+                      priceCurrency: 'CAD',
+                    }))
+                  ),
+                },
+              }
+            : {}),
         },
-        ...(props.faq.length
+        ...(faqForSchema.length
           ? [
               {
                 '@type': 'FAQPage',
                 '@id': `${pageUrl}#faq`,
-                mainEntity: faqGroups.flatMap((g) => g.items).map((q) => ({
+                mainEntity: faqForSchema.map((q) => ({
                   '@type': 'Question',
                   name: q.question,
                   acceptedAnswer: { '@type': 'Answer', text: stripHtml(q.answer) },
@@ -197,6 +240,31 @@ const teamTitle = props.shortTitle.charAt(0).toLowerCase() + props.shortTitle.sl
         offerings={props.offerings}
         highlight={props.highlight}
       />
+
+      {hasPackages && (
+        <PricingPackages
+          title={props.packagesTitle ?? 'Nos forfaits'}
+          intro={props.packagesIntro}
+          startOptions={props.packagesStartOptions}
+          groups={packageGroups}
+          terms={props.packagesTerms}
+        />
+      )}
+
+      {props.steps && props.steps.length > 0 && (
+        <PackageSteps
+          title={props.stepsTitle ?? 'Comment ça fonctionne'}
+          steps={props.steps}
+          areaTitle={props.areaTitle}
+          areaText={props.areaText}
+          areaCities={props.areaCities}
+          areaOffices={props.areaOffices}
+        />
+      )}
+
+      {hasPackages && props.prequalTitle && (
+        <PrequalForm title={props.prequalTitle} intro={props.prequalIntro} packages={allPackages} />
+      )}
 
       {props.testimonial && (
         <TestimonialSingle quote={props.testimonial.quote} author={props.testimonial.author} />

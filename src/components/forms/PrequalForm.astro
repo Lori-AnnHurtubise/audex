@@ -1,0 +1,270 @@
+---
+// Formulaire de préqualification des forfaits (Netlify Forms : « prequalification-affaires »)
+// Le formulaire est aussi déclaré dans src/pages/__forms.html.
+import type { PackageItem } from '../sections/PricingPackages.astro';
+
+export interface Props {
+  title: string;
+  intro?: string;
+  packages: PackageItem[];
+  anchor?: string;
+}
+
+const { title, intro, packages, anchor = 'trouver-forfait' } = Astro.props;
+
+// Besoin choisi → forfait suggéré
+const needs = [
+  { value: 'Incorporer au Québec', pkg: 'incorporation-quebec' },
+  { value: 'Incorporer au fédéral', pkg: 'incorporation-federale' },
+  { value: 'Convention entre actionnaires', pkg: 'convention-actionnaires' },
+  { value: 'Contrat de service', pkg: 'contrat-service' },
+  { value: 'Publier un bail commercial', pkg: 'bail-commercial' },
+  { value: 'Mise à jour annuelle', pkg: 'mise-a-jour-annuelle' },
+  { value: 'Autre / je ne sais pas', pkg: 'consultation' },
+];
+const shareholders = ['1', '2', '3 à 5', '6 ou plus'];
+const incorporated = ['Non, pas encore', 'Oui, au Québec', 'Oui, au fédéral', 'Je ne sais pas'];
+const deadlines = ['Dès que possible', "D'ici 1 mois", "D'ici 3 mois", 'Aucune échéance'];
+const regions = [
+  'Bas-Saint-Laurent',
+  'Saguenay–Lac-Saint-Jean',
+  'Capitale-Nationale',
+  'Mauricie',
+  'Estrie',
+  'Montréal',
+  'Outaouais',
+  'Abitibi-Témiscamingue',
+  'Côte-Nord',
+  'Nord-du-Québec',
+  'Gaspésie–Îles-de-la-Madeleine',
+  'Chaudière-Appalaches',
+  'Laval',
+  'Lanaudière',
+  'Laurentides',
+  'Montérégie',
+  'Centre-du-Québec',
+];
+
+const fmt = (n: number) => new Intl.NumberFormat('fr-CA', { maximumFractionDigits: 0 }).format(n);
+const pkgData = Object.fromEntries(
+  packages.map((p) => [
+    p.id,
+    {
+      name: p.name,
+      note: p.priceNote ?? '',
+      prices: p.prices.map((pr) => ({ amount: `${fmt(pr.amount)} $`, label: pr.label ?? '' })),
+      summary: p.includes.filter((i) => i.length <= 60).slice(0, 2).join(' · '),
+    },
+  ])
+);
+const needToPkg = Object.fromEntries(needs.map((n) => [n.value, n.pkg]));
+---
+
+<section class="section section-light" id={anchor}>
+  <div class="container-audex">
+    <div class="prequal">
+      <div class="prequal-aside">
+        <h2>{title}</h2>
+        {intro && <p class="prequal-intro">{intro}</p>}
+        <div class="prequal-suggest" id="prequal-suggest" hidden aria-live="polite">
+          <p class="prequal-suggest-label">Forfait suggéré</p>
+          <p class="prequal-suggest-name" id="prequal-suggest-name"></p>
+          <p class="prequal-suggest-price" id="prequal-suggest-price"></p>
+          <p class="prequal-suggest-summary" id="prequal-suggest-summary"></p>
+        </div>
+      </div>
+
+      <form
+        name="prequalification-affaires"
+        method="POST"
+        action="/merci"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        class="prequal-form"
+        id="prequal-form"
+      >
+        <input type="hidden" name="form-name" value="prequalification-affaires" />
+        <input type="hidden" name="forfait-suggere" id="prequal-suggested" value="" />
+        <p style="position:absolute;left:-9999px;" aria-hidden="true">
+          <label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <fieldset class="prequal-chips">
+          <legend>De quoi avez-vous besoin? <span class="required">*</span></legend>
+          {needs.map((n, i) => (
+            <label class="chip">
+              <input type="radio" name="besoin" value={n.value} required={i === 0} />
+              <span>{n.value}</span>
+            </label>
+          ))}
+        </fieldset>
+
+        <fieldset class="prequal-chips">
+          <legend>Nombre d'actionnaires</legend>
+          {shareholders.map((v) => (
+            <label class="chip">
+              <input type="radio" name="actionnaires" value={v} />
+              <span>{v}</span>
+            </label>
+          ))}
+        </fieldset>
+
+        <div class="prequal-row">
+          <div class="form-group">
+            <label for="pq-incorporee">Votre entreprise est-elle déjà incorporée?</label>
+            <select id="pq-incorporee" name="incorporee">
+              {incorporated.map((v) => <option value={v}>{v}</option>)}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pq-echeance">Échéance souhaitée</label>
+            <select id="pq-echeance" name="echeance">
+              {deadlines.map((v) => <option value={v}>{v}</option>)}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pq-region">Région</label>
+            <select id="pq-region" name="region">
+              <option value="">Choisissez votre région</option>
+              {regions.map((v) => <option value={v}>{v}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div class="prequal-row">
+          <div class="form-group">
+            <label for="pq-nom">Nom complet <span class="required">*</span></label>
+            <input type="text" id="pq-nom" name="nom" required autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="pq-courriel">Courriel <span class="required">*</span></label>
+            <input type="email" id="pq-courriel" name="courriel" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="pq-telephone">Téléphone <span class="required">*</span></label>
+            <input type="tel" id="pq-telephone" name="telephone" required autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pq-message">Décrivez brièvement votre situation <span class="optional">(facultatif)</span></label>
+          <textarea id="pq-message" name="message" rows="4"></textarea>
+        </div>
+
+        <label class="prequal-consent">
+          <input type="checkbox" name="consentement" value="Oui" required />
+          <span>J'accepte qu'AUDEX Avocats utilise ces renseignements pour répondre à ma demande, conformément à sa <a href="/politique-confidentialite">politique de confidentialité</a>.</span>
+        </label>
+
+        <div class="prequal-submit">
+          <button type="submit" class="btn btn-gold">Recevoir ma recommandation</button>
+          <p>L'envoi du formulaire ne crée pas de relation avocat-client. N'y inscrivez pas d'information confidentielle.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script is:inline define:vars={{ pkgData, needToPkg }}>
+  (() => {
+    const form = document.getElementById('prequal-form');
+    if (!form) return;
+    const box = document.getElementById('prequal-suggest');
+    const nameEl = document.getElementById('prequal-suggest-name');
+    const priceEl = document.getElementById('prequal-suggest-price');
+    const sumEl = document.getElementById('prequal-suggest-summary');
+    const hidden = document.getElementById('prequal-suggested');
+
+    const update = () => {
+      const need = form.querySelector('input[name="besoin"]:checked')?.value;
+      const sh = form.querySelector('input[name="actionnaires"]:checked')?.value;
+      const id = need && needToPkg[need];
+      const p = id && pkgData[id];
+      if (!p) { box.hidden = true; hidden.value = ''; return; }
+      let price = p.prices[0];
+      let name = p.name;
+      let note = p.note;
+      if (p.prices.length > 1 && sh) {
+        price = sh === '3 à 5' ? p.prices[1] : p.prices[0];
+      }
+      if (id === 'convention-actionnaires') {
+        if (sh === '6 ou plus') { price = { amount: 'Sur soumission', label: '' }; note = ''; }
+        else name = `${p.name} (${sh === '3 à 5' ? '3 à 5' : '2'})`;
+      }
+      if ((id === 'incorporation-quebec' || id === 'incorporation-federale') && (sh === '3 à 5' || sh === '6 ou plus')) {
+        note = `${note} · plus de 2 actionnaires : prix confirmé à la consultation`;
+      }
+      nameEl.textContent = name;
+      priceEl.innerHTML = '';
+      const strong = document.createElement('strong');
+      strong.textContent = price.amount;
+      priceEl.append(strong, document.createTextNode(note ? ` ${note}` : ''));
+      sumEl.textContent = p.summary;
+      box.hidden = false;
+      hidden.value = `${name} – ${price.amount}`;
+    };
+    form.addEventListener('change', update);
+
+    // « Choisir ce forfait » : présélectionne le besoin correspondant
+    document.querySelectorAll('[data-package]').forEach((a) => {
+      a.addEventListener('click', () => {
+        const need = Object.keys(needToPkg).find((k) => needToPkg[k] === a.dataset.package);
+        const input = need && form.querySelector(`input[name="besoin"][value="${CSS.escape(need)}"]`);
+        if (input) { input.checked = true; update(); }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .prequal { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 1024px) { .prequal { grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; } }
+  .prequal-aside h2 { margin-bottom: 1rem; }
+  .prequal-intro { color: #555; line-height: 1.65; margin-bottom: 1.5rem; }
+  .prequal-suggest {
+    border: 2px solid var(--color-navy);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.4rem;
+    background: var(--color-white);
+  }
+  .prequal-suggest p { margin: 0; }
+  .prequal-suggest-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #777; margin-bottom: 0.35rem !important; }
+  .prequal-suggest-name { font-weight: 700; font-size: 1.15rem; color: var(--color-navy); margin-bottom: 0.35rem !important; }
+  .prequal-suggest-price { color: #666; font-size: 0.85rem; margin-bottom: 0.5rem !important; }
+  .prequal-suggest-price :global(strong) { font-size: 1.6rem; color: var(--color-navy); margin-right: 0.25rem; }
+  .prequal-suggest-summary { font-size: 0.85rem; color: #666; line-height: 1.5; }
+
+  .prequal-form {
+    position: relative;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+  }
+  @media (min-width: 768px) { .prequal-form { padding: 2rem 2.25rem; } }
+  .prequal-chips { border: 0; padding: 0; margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .prequal-chips legend { font-weight: 600; font-size: 0.95rem; color: var(--color-navy); margin-bottom: 0.75rem; padding: 0; }
+  .chip { position: relative; cursor: pointer; }
+  .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .chip span {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    color: var(--color-navy);
+    background: var(--color-white);
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+  }
+  .chip:hover span { border-color: var(--color-navy); }
+  .chip input:checked + span { background: var(--color-navy); border-color: var(--color-navy); color: var(--color-white); }
+  .chip input:focus-visible + span { box-shadow: 0 0 0 3px rgba(230, 165, 16, 0.4); }
+  .prequal-row { display: grid; grid-template-columns: 1fr; gap: 0 1rem; }
+  @media (min-width: 768px) { .prequal-row { grid-template-columns: repeat(3, 1fr); } }
+  .prequal-consent { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.9rem; line-height: 1.5; margin: 0.5rem 0 1.5rem; cursor: pointer; }
+  .prequal-consent input { margin-top: 0.2rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; accent-color: var(--color-navy); }
+  .prequal-consent a { color: var(--color-navy); text-decoration: underline; }
+  .prequal-submit { display: flex; flex-direction: column; gap: 0.75rem; }
+  @media (min-width: 768px) { .prequal-submit { flex-direction: row; align-items: center; gap: 1.5rem; } }
+  .prequal-submit p { font-size: 0.8rem; color: #777; line-height: 1.5; margin: 0; }
+</style>

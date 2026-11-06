@@ -22,6 +22,21 @@
     <textarea name="message"></textarea>
   </form>
 
+  <!-- Préqualification des forfaits — /services/droit-affaires/ (components/forms/PrequalForm.astro) -->
+  <form name="prequalification-affaires" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="besoin" />
+    <input type="text" name="actionnaires" />
+    <select name="incorporee"><option value=""></option></select>
+    <select name="echeance"><option value=""></option></select>
+    <select name="region"><option value=""></option></select>
+    <input type="text" name="nom" />
+    <input type="email" name="courriel" />
+    <input type="tel" name="telephone" />
+    <textarea name="message"></textarea>
+    <input type="checkbox" name="consentement" />
+    <input type="hidden" name="forfait-suggere" />
+  </form>
+
   <!-- Exemple : ajoutez ici chaque nouveau formulaire de landing -->
   <!--
   <form name="landing-nom-de-la-landing" data-netlify="true" netlify-honeypot="bot-field" hidden>

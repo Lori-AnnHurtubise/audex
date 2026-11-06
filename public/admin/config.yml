@@ -135,6 +135,53 @@ collections:
           - { label: 'Réponse (HTML permis)', name: 'answer', widget: 'text' }
       - { label: 'Texte du CTA final', name: 'ctaText', widget: 'string', default: 'Discutez de votre situation avec un avocat' }
       - { label: 'Sous-titre du CTA final (optionnel)', name: 'ctaSubtitle', widget: 'text', required: false }
+      - { label: 'Forfaits : titre (optionnel)', name: 'packagesTitle', widget: 'string', required: false }
+      - { label: 'Forfaits : introduction', name: 'packagesIntro', widget: 'text', required: false }
+      - label: 'Forfaits : deux façons de commencer'
+        name: 'packagesStartOptions'
+        widget: 'list'
+        required: false
+        fields:
+          - { label: 'Titre', name: 'title', widget: 'string' }
+          - { label: 'Texte', name: 'text', widget: 'text' }
+      - label: 'Forfaits : groupes'
+        name: 'packageGroups'
+        widget: 'list'
+        required: false
+        fields:
+          - { label: 'Nom du groupe', name: 'label', widget: 'string' }
+          - label: 'Forfaits'
+            name: 'items'
+            widget: 'list'
+            fields:
+              - { label: 'Identifiant (ne pas modifier)', name: 'id', widget: 'string' }
+              - { label: 'Nom', name: 'name', widget: 'string' }
+              - { label: 'Description', name: 'description', widget: 'text', required: false }
+              - label: 'Prix'
+                name: 'prices'
+                widget: 'list'
+                fields:
+                  - { label: 'Montant ($, sans taxes)', name: 'amount', widget: 'number', value_type: 'int' }
+                  - { label: 'Précision (ex. 2 actionnaires)', name: 'label', widget: 'string', required: false }
+                  - { label: 'Nom schema.org', name: 'schemaName', widget: 'string', required: false }
+              - { label: 'Note de prix (ex. + taxes et déboursés)', name: 'priceNote', widget: 'string', required: false }
+              - { label: 'Inclus', name: 'includes', widget: 'list', field: { label: 'Élément', name: 'item', widget: 'string' } }
+              - { label: 'Non inclus', name: 'excludes', widget: 'list', required: false, field: { label: 'Élément', name: 'item', widget: 'string' } }
+      - { label: 'Forfaits : conditions (petit texte)', name: 'packagesTerms', widget: 'text', required: false }
+      - { label: 'Étapes : titre', name: 'stepsTitle', widget: 'string', required: false }
+      - label: 'Étapes'
+        name: 'steps'
+        widget: 'list'
+        required: false
+        fields:
+          - { label: 'Titre', name: 'title', widget: 'string' }
+          - { label: 'Texte', name: 'text', widget: 'text' }
+      - { label: 'Encadré régions : titre', name: 'areaTitle', widget: 'string', required: false }
+      - { label: 'Encadré régions : texte', name: 'areaText', widget: 'text', required: false }
+      - { label: 'Encadré régions : villes', name: 'areaCities', widget: 'list', required: false }
+      - { label: 'Encadré régions : bureaux', name: 'areaOffices', widget: 'string', required: false }
+      - { label: 'Formulaire de préqualification : titre', name: 'prequalTitle', widget: 'string', required: false }
+      - { label: 'Formulaire de préqualification : introduction', name: 'prequalIntro', widget: 'text', required: false }
       - { label: 'Nom schema.org du service (optionnel)', name: 'schemaName', widget: 'string', required: false }
       - { label: 'Sujets schema.org (knowsAbout, optionnel)', name: 'knowsAbout', widget: 'list', required: false }
       - { label: 'Services connexes (slugs)', name: 'relatedServices', widget: 'list', required: false }

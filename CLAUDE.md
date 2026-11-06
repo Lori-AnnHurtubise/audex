@@ -59,6 +59,10 @@ src/
                           # Gabarit « deux publics » (employeurs/employés) activé si le .md
                           # définit `audiences` (ex. droit-emploi-travail) : cartes d'ancre,
                           # FAQ en 2 colonnes (faq[].group) et JSON-LD généré (page, service, FAQ)
+                          # Forfaits à prix fixe activés si le .md définit `packageGroups`
+                          # (ex. droit-affaires) : grille, étapes, encadré régions, formulaire
+                          # de préqualification (Netlify Forms « prequalification-affaires »,
+                          # déclaré dans __forms.html) et JSON-LD avec OfferCatalog
   components/
     cards/TeamCard.astro           # Carte membre (grille /notre-equipe/)
     sections/ServiceTeam.astro     # Avocats liés à un domaine (services + blog)
@@ -143,8 +147,8 @@ Généré automatiquement par `@astrojs/sitemap` à chaque build.
 - [ ] Pages géolocalisées à enrichir (avocat-quebec-ville, portneuf, donnacona)
 - [ ] Grille de services de l'accueil : `repeat(4, 1fr)` à 1024px alors qu'il y a 5 services
   (Médiation familiale tombe seule sur une 2e ligne) — à valider avec le client
-- [ ] Page droit des affaires : ajouter les forfaits à prix fixe, la section « Comment ça fonctionne »,
-  un formulaire de préqualification et les nouvelles FAQ (contenu dans « nouvelles demandes »)
+- [x] Page droit des affaires : forfaits à prix fixe, « Comment ça fonctionne », formulaire de
+  préqualification et nouvelles FAQ (en ligne novembre 2026)
 
 ## Membres de l'équipe avec champs de pratique configurés
 

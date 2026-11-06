@@ -1,0 +1,166 @@
+---
+// Grille de forfaits à prix fixe, regroupés par étape de vie de l'entreprise
+export interface PackageItem {
+  id: string;
+  name: string;
+  description?: string;
+  prices: { amount: number; label?: string }[];
+  priceNote?: string;
+  includes: string[];
+  excludes: string[];
+}
+
+export interface Props {
+  title: string;
+  intro?: string;
+  startOptions?: { title: string; text: string }[];
+  groups: { label: string; items: PackageItem[] }[];
+  terms?: string;
+  formAnchor?: string;
+}
+
+const { title, intro, startOptions = [], groups, terms, formAnchor = 'trouver-forfait' } = Astro.props;
+
+const fmt = (n: number) => new Intl.NumberFormat('fr-CA', { maximumFractionDigits: 0 }).format(n);
+---
+
+<section class="section section-light packages" id="forfaits">
+  <div class="container-audex">
+    <div class="packages-header">
+      <h2>{title}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+
+    {startOptions.length > 0 && (
+      <div class="packages-start">
+        {startOptions.map((o) => (
+          <div>
+            <p class="packages-start-title">{o.title}</p>
+            <p>{o.text}</p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {groups.map((g) => (
+      <div class="packages-group">
+        <p class="packages-group-label">{g.label}</p>
+        <div class={`packages-grid packages-grid-${Math.min(g.items.length, 3)}`}>
+          {g.items.map((p) => (
+            <article class="package-card">
+              <h3 class="package-name">{p.name}</h3>
+              {p.description && <p class="package-desc">{p.description}</p>}
+              <div class="package-prices">
+                {p.prices.map((pr) => (
+                  <p class="package-price">
+                    <span class="package-amount">{fmt(pr.amount)}&nbsp;$</span>
+                    <span class="package-note">{[pr.label, p.priceNote].filter(Boolean).join(', ')}</span>
+                  </p>
+                ))}
+              </div>
+              <div class="package-lists">
+                {p.includes.length > 0 && (
+                  <>
+                    <p class="package-list-label package-list-label-in">Inclus</p>
+                    <ul class="package-list package-list-in">
+                      {p.includes.map((i) => <li>{i}</li>)}
+                    </ul>
+                  </>
+                )}
+                {p.excludes.length > 0 && (
+                  <>
+                    <p class="package-list-label">Non inclus</p>
+                    <ul class="package-list package-list-out">
+                      {p.excludes.map((i) => <li>{i}</li>)}
+                    </ul>
+                  </>
+                )}
+              </div>
+              <a href={`#${formAnchor}`} class="package-cta" data-package={p.id}>Choisir ce forfait</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    {terms && <p class="packages-terms">{terms}</p>}
+  </div>
+</section>
+
+<style>
+  .packages-header { max-width: 760px; margin-bottom: 2rem; }
+  .packages-header h2 { margin-bottom: 1rem; }
+  .packages-header p { color: #555; line-height: 1.7; font-size: 1.05rem; }
+
+  .packages-start {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 3rem;
+  }
+  @media (min-width: 768px) { .packages-start { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+  .packages-start p { margin: 0; color: #555; line-height: 1.6; }
+  .packages-start .packages-start-title { font-weight: 700; color: var(--color-navy); margin-bottom: 0.35rem; }
+
+  .packages-group { margin-bottom: 3rem; }
+  .packages-group-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  .packages-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  @media (min-width: 768px) { .packages-grid-2, .packages-grid-3 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .packages-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+  .package-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+  }
+  .package-name { font-size: 1.25rem; margin-bottom: 0.4rem; }
+  .package-desc { color: #555; font-size: 0.95rem; line-height: 1.55; margin-bottom: 1rem; }
+  .package-prices { padding-bottom: 1.1rem; margin-bottom: 1.1rem; border-bottom: 1px solid var(--color-border); }
+  .package-price { margin: 0 0 0.25rem; display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.4rem; }
+  .package-amount { font-size: 2rem; font-weight: 700; color: var(--color-navy); line-height: 1.2; white-space: nowrap; }
+  .package-note { font-size: 0.85rem; color: #666; }
+  .package-lists { flex: 1; }
+  .package-list-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #777;
+    margin: 0 0 0.5rem;
+  }
+  .package-list-label-in { color: #2f7d4f; }
+  .package-list { list-style: none; padding: 0; margin: 0 0 1.1rem; display: grid; gap: 0.45rem; }
+  .package-list li { position: relative; padding-left: 1.5rem; font-size: 0.92rem; line-height: 1.5; }
+  .package-list li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
+  .package-list-in li::before { content: '✓'; color: #2f7d4f; }
+  .package-list-out li { color: #666; }
+  .package-list-out li::before { content: '×'; color: #999; }
+  .package-cta {
+    display: block;
+    text-align: center;
+    margin-top: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background var(--transition);
+  }
+  .package-cta:hover { background: var(--color-navy-light); color: var(--color-white); }
+  .packages-terms { font-size: 0.85rem; color: #666; line-height: 1.6; max-width: 820px; margin: 0; }
+</style>

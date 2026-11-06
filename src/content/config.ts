@@ -65,6 +65,45 @@ const services = defineCollection({
       .array(z.object({ title: z.string(), description: z.string() }))
       .optional(),
     ctaSubtitle: z.string().optional(),
+    // Forfaits à prix fixe (ex. droit-affaires) — optionnel
+    packagesTitle: z.string().optional(),
+    packagesIntro: z.string().optional(),
+    packagesStartOptions: z
+      .array(z.object({ title: z.string(), text: z.string() }))
+      .optional(),
+    packageGroups: z
+      .array(
+        z.object({
+          label: z.string(),
+          items: z.array(
+            z.object({
+              id: z.string(),
+              name: z.string(),
+              description: z.string().optional(),
+              prices: z.array(
+                z.object({
+                  amount: z.number(),
+                  label: z.string().optional(),
+                  schemaName: z.string().optional(),
+                })
+              ),
+              priceNote: z.string().optional(),
+              includes: z.array(z.string()).default([]),
+              excludes: z.array(z.string()).default([]),
+            })
+          ),
+        })
+      )
+      .optional(),
+    packagesTerms: z.string().optional(),
+    stepsTitle: z.string().optional(),
+    steps: z.array(z.object({ title: z.string(), text: z.string() })).optional(),
+    areaTitle: z.string().optional(),
+    areaText: z.string().optional(),
+    areaCities: z.array(z.string()).optional(),
+    areaOffices: z.string().optional(),
+    prequalTitle: z.string().optional(),
+    prequalIntro: z.string().optional(),
     schemaName: z.string().optional(),
     knowsAbout: z.array(z.string()).optional(),
     offeringsTitle: z.string().default("Ce qu'Audex peut faire pour vous"),
