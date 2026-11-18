@@ -120,6 +120,7 @@ Services archivés (fichiers supprimés, redirections 301 dans `netlify.toml`) :
 ## Redirections (netlify.toml)
 
 - 37 redirections 301 permanentes (anciennes URL WordPress → nouvelle structure)
+- 10 redirections ajoutées en nov. 2026 pour les anciennes URL signalées « Introuvable (404) » dans Search Console
 - 1 redirection 301 pour `audrey-castonguay` (ex-membre sans fiche)
 - `/sitemap.xml` → `/sitemap-index.xml` (301)
 - Voir commentaires dans `netlify.toml` pour le détail par groupe

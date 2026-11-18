@@ -143,7 +143,7 @@
 
 [[redirects]]
   from = "/champs-de-pratique/droit-de-lemploi-et-du-travail/"
-  to   = "/"
+  to   = "/services/droit-emploi-travail/"
   status = 301
 
 [[redirects]]
@@ -234,6 +234,57 @@
 [[redirects]]
   from = "/tag/permis-de-conduire/"
   to   = "/services/droit-criminel-penal/"
+  status = 301
+
+# ─── Anciennes pages WordPress repérées en 404 dans Search Console (nov. 2026) ─────────
+[[redirects]]
+  from = "/mediation-familiale/"
+  to   = "/services/mediation-familiale/"
+  status = 301
+
+[[redirects]]
+  from = "/category/travail/"
+  to   = "/services/droit-emploi-travail/"
+  status = 301
+
+[[redirects]]
+  from = "/tag/emploi/"
+  to   = "/services/droit-emploi-travail/"
+  status = 301
+
+[[redirects]]
+  from = "/2024/08/21/les-crimes-dintentions-generales-et-specifiques/"
+  to   = "/blog/2024-08-07-les-crimes-dintentions-generales-et-specifiques/"
+  status = 301
+
+[[redirects]]
+  from = "/tag/avocat-pour-prevenir/"
+  to   = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/category/evenements/"
+  to   = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/publications/page/*"
+  to   = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/author/v-tremblay/"
+  to   = "/notre-equipe/"
+  status = 301
+
+[[redirects]]
+  from = "/tribunaux/"
+  to   = "/"
+  status = 301
+
+[[redirects]]
+  from = "/espace-securise/"
+  to   = "/"
   status = 301
 
 [[headers]]
