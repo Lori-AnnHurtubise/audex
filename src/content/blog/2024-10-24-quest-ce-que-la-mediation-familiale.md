@@ -41,6 +41,8 @@ Au moins un enfant à charge
 
 Modifier une entente conclue ou réviser un jugement rendu, ou régler un différend avec un nouveau conjoint en ayant déjà profité des cinq heures gratuites avec un ex-conjoint, ou pour les parties ayant déjà profité du programme pour obtenir un jugement de séparation de corps
 
+> **À noter :** AUDEX Avocats ne prend plus de dossiers de médiation familiale gratuite. Nos services de médiation sont offerts à titre privé et facturés selon nos honoraires. Pour bénéficier des heures payées par l'État, il faut vous adresser à un médiateur qui participe à ce programme.
+
 Les séances de médiation ont lieu en présence des deux parties et d’un médiateur ou, si les parties en conviennent, de deux médiateurs. Les séances peuvent aussi, si tous y consentent, avoir lieu en présence d’une seule partie ou de l’enfant ou encore d’autres personnes qui ne sont ni experts ni conseillers, si leur contribution peut être utile au règlement du différend. Chaque partie peut quitter la médiation à tout moment.
 
 Une entente de médiation peut être rédigée et signée par les parties. Cependant, sans avoir été entériné par le tribunal, l’entente n’a aucune valeur juridique et n’est qu’un document confidentiel entre les parties.
