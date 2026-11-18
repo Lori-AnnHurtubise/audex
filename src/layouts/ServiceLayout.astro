@@ -105,7 +105,10 @@ const allPackages = packageGroups.flatMap((g) => g.items);
 const hasPackages = allPackages.length > 0;
 const faqForSchema = isAudienceLayout ? faqGroups.flatMap((g) => g.items) : props.faq;
 
-const jsonLd = (isAudienceLayout || hasPackages) && pageUrl
+// Activé aussi pour toute page qui liste ses sujets (knowsAbout), ex. droit-familial
+const wantsSchema = isAudienceLayout || hasPackages || (props.knowsAbout?.length ?? 0) > 0;
+
+const jsonLd = wantsSchema && pageUrl
   ? {
       '@context': 'https://schema.org',
       '@graph': [

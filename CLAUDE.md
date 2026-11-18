@@ -63,6 +63,8 @@ src/
                           # (ex. droit-affaires) : grille, étapes, encadré régions, outil
                           # « Trouvez le bon forfait » (sélection + forfait suggéré, aucun champ
                           # personnel ni envoi) et JSON-LD avec OfferCatalog
+                          # JSON-LD aussi généré pour toute page qui définit `knowsAbout`
+                          # (ex. droit-familial, contenu validé par une avocate en nov. 2026)
   components/
     cards/TeamCard.astro           # Carte membre (grille /notre-equipe/)
     sections/ServiceTeam.astro     # Avocats liés à un domaine (services + blog)
