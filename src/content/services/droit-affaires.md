@@ -4,9 +4,8 @@ shortTitle: Droit des affaires
 order: 4
 seoTitle: "Avocat en droit des affaires | Forfaits à prix fixe | AUDEX"
 seoDescription: "Incorporation, convention entre actionnaires, contrats et mise à jour annuelle à prix fixe. Avocats en droit des affaires pour les PME de partout au Québec."
-heroTitle: Protégez votre entreprise avec un avocat qui comprend les PME
-heroSubtitle: "Incorporation, contrats, convention d'actionnaires et litiges
-  commerciaux : un avocat d'affaires accessible et efficace."
+heroTitle: "Avocat en droit des affaires au Québec pour les PME"
+heroSubtitle: "Protégez votre entreprise avec un avocat qui comprend les PME : incorporation, contrats, convention entre actionnaires et forfaits à prix fixe, partout au Québec."
 heroImage: /images/services/droit-affaires.jpg
 heroImageWebp: /images/services/droit-affaires.webp
 heroImageAlt: Avocats en droit des affaires dans une salle de conférence donnant sur Québec
