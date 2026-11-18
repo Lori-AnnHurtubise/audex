@@ -2,9 +2,9 @@
 title: Droit familial
 shortTitle: Droit familial
 order: 1
-seoTitle: "Avocat en droit de la famille à Québec | AUDEX Avocats"
-seoDescription: "Avocat en droit de la famille à Québec et Portneuf : divorce, séparation, garde d'enfants, pension alimentaire et conjoints de fait. Première consultation à tarif fixe."
-heroTitle: "Avocat en droit de la famille à Québec"
+seoTitle: "Avocat en droit de la famille au Québec | AUDEX Avocats"
+seoDescription: "Avocat en droit de la famille partout au Québec, en personne ou à distance : divorce, séparation, garde d'enfants, pension alimentaire. Première consultation à tarif fixe."
+heroTitle: "Avocat en droit de la famille au Québec"
 heroSubtitle: "Divorce, séparation, garde d'enfants, pension alimentaire : un avocat humain et rigoureux pour vous guider dans cette étape difficile."
 heroImage: "/images/services/droit-familial-parc.jpg"
 heroImageWebp: "/images/services/droit-familial-parc.webp"
@@ -83,6 +83,6 @@ La garde des enfants et la pension alimentaire sont souvent au cœur des préocc
 
 Au Québec, la majorité des couples ne sont pas mariés, et leurs droits lors d'une séparation sont différents. Depuis le 30 juin 2025, le régime d'union parentale s'applique aux conjoints de fait qui ont un enfant né ou adopté à partir de cette date. On vous explique clairement ce qui s'applique à votre situation.
 
-### À Québec, dans Portneuf et partout dans la région
+### Partout au Québec, en personne ou à distance
 
-Nos avocats vous reçoivent à nos bureaux de Québec et de Donnacona, dans Portneuf. Vous n'avez pas à traverser cette épreuve seul(e) : avec le bon guide à vos côtés, vous pouvez prendre des décisions éclairées et avancer vers un nouveau chapitre de votre vie.
+Nous accompagnons des clients partout au Québec. Vous pouvez nous rencontrer à nos bureaux de Québec et de Donnacona, dans Portneuf, ou à distance, par visioconférence ou par téléphone, sans avoir à vous déplacer. Vous n'avez pas à traverser cette épreuve seul(e) : avec le bon guide à vos côtés, vous pouvez prendre des décisions éclairées et avancer vers un nouveau chapitre de votre vie.
