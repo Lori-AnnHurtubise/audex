@@ -2,20 +2,11 @@
 // Boutons d'ancre du hero vers les sections par public (employeurs / employés)
 export interface Props {
   audiences: { id: string; label: string; cardTitle: string; cardText?: string }[];
-  updatedDate?: Date;
 }
 
-const { audiences, updatedDate } = Astro.props;
-
-const updatedLabel = updatedDate
-  ? new Intl.DateTimeFormat('fr-CA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(updatedDate)
-  : undefined;
-const updatedIso = updatedDate ? updatedDate.toISOString().slice(0, 10) : undefined;
+// La date « Mis à jour le » est affichée par HeroInternal (toutes les pages)
+const { audiences } = Astro.props;
 ---
-
-{updatedLabel && (
-  <p class="hero-updated">Mis à jour le <time datetime={updatedIso}>{updatedLabel}</time></p>
-)}
 
 <div class="audience-cards">
   {audiences.map((a, i) => (
@@ -28,11 +19,6 @@ const updatedIso = updatedDate ? updatedDate.toISOString().slice(0, 10) : undefi
 </div>
 
 <style>
-  .hero-updated {
-    color: rgba(255, 255, 255, 0.65);
-    font-size: 0.85rem;
-    margin: 1.25rem 0 0;
-  }
   .audience-cards {
     display: grid;
     grid-template-columns: 1fr;

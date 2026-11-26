@@ -46,6 +46,12 @@ const formatDate = (d: Date) =>
       <div class="blog-post">
         <div class="blog-post-meta">
           <time datetime={post.data.publishDate.toISOString()}>{formatDate(post.data.publishDate)}</time>
+          {post.data.updatedDate && (
+            <>
+              <span class="separator">·</span>
+              <span>Mis à jour le <time datetime={post.data.updatedDate.toISOString().slice(0, 10)}>{formatDate(post.data.updatedDate)}</time></span>
+            </>
+          )}
           <span class="separator">·</span>
           <span>Par {post.data.author}</span>
         </div>

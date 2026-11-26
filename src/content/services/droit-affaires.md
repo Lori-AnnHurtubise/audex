@@ -9,6 +9,7 @@ heroSubtitle: "Protégez votre entreprise avec un avocat qui comprend les PME : 
 heroImage: /images/services/droit-affaires.jpg
 heroImageWebp: /images/services/droit-affaires.webp
 heroImageAlt: Avocats en droit des affaires dans une salle de conférence donnant sur Québec
+updatedDate: 2026-11-18
 introTitle: Vous vivez un enjeu juridique dans votre entreprise?
 offeringsTitle: " "
 offeringsSubtitle: "Chaque décision d'affaires a des implications légales : on

@@ -10,6 +10,7 @@ const blog = defineCollection({
     image: z.string().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    updatedDate: z.coerce.date().optional(),
   }),
 });
 
@@ -174,6 +175,7 @@ const pages = defineCollection({
     heroImage: z.string().optional(),
     heroImageWebp: z.string().optional(),
     heroImageAlt: z.string().optional(),
+    updatedDate: z.coerce.date().optional(),
   }),
 });
 

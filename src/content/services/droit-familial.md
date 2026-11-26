@@ -9,6 +9,7 @@ heroSubtitle: "Divorce, séparation, garde d'enfants, pension alimentaire : un a
 heroImage: "/images/services/droit-familial-parc.jpg"
 heroImageWebp: "/images/services/droit-familial-parc.webp"
 heroImageAlt: "Parents séparés et leurs enfants dans un parc de Québec en automne : avocat en droit de la famille chez AUDEX Avocats"
+updatedDate: 2026-11-18
 introTitle: "Vous vivez une séparation ou un conflit familial?"
 offeringsTitle: "Nos services en droit de la famille"
 offeringsSubtitle: "Derrière chaque dossier, il y a des enfants, des émotions et un avenir à rebâtir. On vous accompagne avec rigueur et humanité, à chaque étape."

@@ -9,9 +9,16 @@ export interface Props {
   imageAlt?: string;
   eyebrow?: string;
   breadcrumb: BreadcrumbItem[];
+  /** Date de dernière mise à jour du contenu, affichée sous le sous-titre (« Mis à jour le … ») */
+  updatedDate?: Date;
 }
 
-const { title, subtitle, image, imageWebp, imageAlt = '', eyebrow, breadcrumb } = Astro.props;
+const { title, subtitle, image, imageWebp, imageAlt = '', eyebrow, breadcrumb, updatedDate } = Astro.props;
+
+const updatedLabel = updatedDate
+  ? new Intl.DateTimeFormat('fr-CA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(updatedDate)
+  : undefined;
+const updatedIso = updatedDate ? updatedDate.toISOString().slice(0, 10) : undefined;
 ---
 
 <section class="hero-internal">
@@ -28,6 +35,17 @@ const { title, subtitle, image, imageWebp, imageAlt = '', eyebrow, breadcrumb } 
     {eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
     <h1>{title}</h1>
     {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+    {updatedLabel && (
+      <p class="hero-updated">Mis à jour le <time datetime={updatedIso}>{updatedLabel}</time></p>
+    )}
     <slot />
   </div>
 </section>
+
+<style>
+  .hero-updated {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.85rem;
+    margin: 1.25rem 0 0;
+  }
+</style>

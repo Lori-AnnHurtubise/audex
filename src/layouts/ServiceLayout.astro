@@ -202,12 +202,13 @@ const teamTitle = props.shortTitle.charAt(0).toLowerCase() + props.shortTitle.sl
     imageWebp={props.heroImageWebp}
     imageAlt={props.heroImageAlt}
     eyebrow={props.heroEyebrow}
+    updatedDate={props.updatedDate}
     breadcrumb={[
       { label: 'Nos services', href: '/#services' },
       { label: props.shortTitle },
     ]}
   >
-    {isAudienceLayout && <AudienceCards audiences={audiences} updatedDate={props.updatedDate} />}
+    {isAudienceLayout && <AudienceCards audiences={audiences} />}
   </HeroInternal>
 
   {isAudienceLayout ? (

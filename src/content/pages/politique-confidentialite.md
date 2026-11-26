@@ -2,6 +2,7 @@
 title: "Politique de confidentialité | AUDEX Avocats"
 description: "Politique de confidentialité d'AUDEX Avocats. Comment nous recueillons, utilisons et protégeons vos renseignements personnels."
 heroTitle: "Politique de confidentialité"
+updatedDate: 2026-04-30
 heroSubtitle: "Nous prenons la protection de vos renseignements personnels très au sérieux."
 ---
 

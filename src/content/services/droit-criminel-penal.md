@@ -9,6 +9,7 @@ heroSubtitle: "Arrestation, accusation criminelle ou constat d'infraction : un a
 heroImage: "/images/services/droit-criminel.png"
 heroImageWebp: "/images/services/droit-criminel.webp"
 heroImageAlt: "Avocat criminaliste au Québec pour défense criminelle et pénale chez AUDEX Avocats"
+updatedDate: 2026-11-23
 introTitle: "Vous faites face à une accusation?"
 offeringsTitle: "Nos services en droit criminel et pénal"
 offeringsSubtitle: "Vous méritez une défense solide et respectueuse : on se bat pour protéger vos droits et votre avenir."

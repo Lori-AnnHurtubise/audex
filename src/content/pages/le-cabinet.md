@@ -4,6 +4,7 @@ description: "AUDEX Avocats, cabinet juridique fondé en 2013 à Québec et Port
 heroTitle: "Une équipe à votre écoute depuis 2013"
 heroImage: "/images/banniere-audex-cabinet.png"
 heroImageAlt: "L'équipe AUDEX Avocats"
+updatedDate: 2026-05-15
 ---
 
 ## Notre mission

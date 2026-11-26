@@ -9,6 +9,7 @@ heroSubtitle: "Un processus humain, avec un médiateur accrédité, pour trouver
 heroImage: "/images/services/mediation-familiale.png"
 heroImageWebp: "/images/services/mediation-familiale.webp"
 heroImageAlt: "Médiation familiale à Québec avec AUDEX Avocats"
+updatedDate: 2026-11-18
 introTitle: "Vous vivez une séparation et souhaitez éviter les tribunaux?"
 offeringsSubtitle: "On vous aide à trouver une entente durable, dans le respect de toute la famille : surtout les enfants."
 offerings:

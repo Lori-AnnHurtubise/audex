@@ -17,6 +17,7 @@ const members = (await getCollection('team')).sort(
 <BaseLayout title={d.title} description={d.description} headerSolid>
   <HeroInternal
     title={d.heroTitle}
+    updatedDate={d.updatedDate}
     subtitle={d.heroSubtitle}
     image={d.heroImage}
     imageWebp={d.heroImageWebp}
